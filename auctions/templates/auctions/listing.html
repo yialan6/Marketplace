@@ -1,0 +1,47 @@
+{% extends  'auctions/layout.html' %} 
+
+{% block body %}
+<form action="{% url 'listing' %}" method='post' class='listing_menu'>
+    {% csrf_token %}
+    <div class="form-group align-items-center">
+        <label class='col-auto'>
+            <h6>Title</h6>
+            <textarea class="form-control" name='title' rows="1" placeholder='Title your listing.' required='true' maxlength=50></textarea>
+        </label>
+    </div>
+    <div class='stock-photo'>
+        <label class='col-auto'>
+            <h6 class='price-title'>Description</h6>
+            <textarea type="text" name='description' class='form-control' rows='4' placeholder="Describe your item." required='true'></textarea>
+        </label>
+        <label class='col-auto'>
+            <h6>Insert Image URL</h6>
+            <textarea type="text" name='image' class='form-control' rows='1' placeholder="Image URL." required='true'></textarea>
+        </label>
+    </div>
+    <div class='select-condition'>
+        <label class='col auto'>
+            <h6>Select Category</h6>
+        <select class="form-control" name='category'>
+            <option>Electronics</option>
+            <option>Health & Household</option>
+            <option>Fashion</option>
+            <option>Beauty & Personal Care</option>
+            <option>Collectables & Toys</option>
+        </label>
+        </select>
+    </div>
+    <div class="form-group">
+        <label class='col-auto'>
+
+            <h6>Starting Bid Price</h6>
+            <input type="number" min="1" step="any" name='starting_bid' class='pricing' required='true'>
+        </label>
+    </div>
+    <label class='col-auto'>
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </label>
+
+</form>
+
+{% endblock %}

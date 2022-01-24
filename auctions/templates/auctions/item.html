@@ -1,0 +1,51 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+    <div class='container'>
+        <div class='row' style='margin-left: -100px;'>
+            <div class='col' style='flex-direction:vertical;'>
+                <img class="card-img-top" src='{{ listing.photo }}' alt="No photo avaiable" style='width: 349px; height:335px; object-fit: cover;'>
+            </div>
+            <div class='col'>
+                <div><small class="text-muted" style='height:40px;'>Seller: {{ listing.seller }} </small></div>
+                <div><h4> {{ listing.item }} </h4></div>
+                <div>Starting Bid: ${{ listing.starting_bid }} </div>
+                <p>
+                    Description: {{ listing.description }}
+                </p>
+                {% if not winner %}
+                <div>
+                    Current bid: ${{listing.bids.amount}}
+                </div>
+                <form action="{% url 'item' listing.id %}" method='post'>
+                    {% csrf_token %}
+                    <input type='text' name='place_bid' placeholder='Place Bid'>
+                    <button type='submit' value='1' name='placebid' class='btn btn-secondary'>Place Bid</button>
+                </form>
+                {% if error %}
+                <div class="col-12 register-field">
+                    <div class="alert alert-block alert-danger alert-trim" style='margin-left: -20px; height:45px'>
+                        <ul>
+                            <li style='margin-left: -30px'>Bid amount must be greater than current bid!!!</li>
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+                <form action="{% url 'item' listing.id %}" method='post' style='margin-top:15px'>
+                    {% csrf_token %}
+                    <button type='submit' value='1' name="watchlist" class="btn btn-secondary">Add to Watchlist</button>
+                </form>
+                <form action="{% url 'item' listing.id %}" method='post' style='margin-top:15px'>
+                    {% csrf_token %}
+                    <button type='submit' value='1' name="end_listing" class="btn btn-secondary">End listing</button>
+                </form>
+                {% else %}
+                <div class="alert alert-success" role="alert">
+                    Listing ended! {{ winner }} won the bidding for ${{ listing.bids.amount }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

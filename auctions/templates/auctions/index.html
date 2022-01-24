@@ -1,0 +1,33 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class='index-title'>{{ title }}</h2>
+
+    <div class="flex-container">
+        {% for listing in items %}
+
+        <div class="flex-items">
+            <div class="card" style='width: 22rem; height:27rem;'>
+                <img class="card-img-top" src='{{ listing.photo }}' alt="No photo avaiable" style='width: 249px; height:135px; object-fit: cover;'>
+                <div class="card-body" style='text-align:left;  overflow:hidden;'>
+                  <h5 class="card-title">{{ listing.item }}</h5>
+                  <p class="card-text" style='margin-top: -30px;'>
+                    <div>Price: ${{ listing.starting_bid }}</div>
+                    <div style='line-height: 1;'>{{ listing.description }}</div>
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <div>
+                    <small class="text-muted" style='margin-left:-15px; '>Seller: {{ listing.seller }} </small>
+                  </div>
+                  <div>
+                    <small class="text-muted" style='margin-left:-15px;'>Posted: {{ listing.time }} </small>
+                  </div>
+                  <a href="{% url 'item' listing.id%}" class="btn stretched-link" style='height: -10px;'></a>
+                </div>
+            </div>        
+        </div>
+
+        {% endfor %}
+    </div>
+{% endblock %}
