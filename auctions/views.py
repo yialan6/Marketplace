@@ -79,14 +79,22 @@ def listing(request):
 
 
 def item(request, item_id):
+    in_watchlist = False
     error = False
     item = Listings.objects.get(id=item_id)
     user = User.objects.get(id=request.user.id)
+    watchlist = Watchlist.objects.get(user=user)
+    if item in watchlist.items.all():
+        in_watchlist = True
     is_seller = True if item.seller == user else False
     if request.method == 'POST':
         if request.POST.get('watchlist'):
-            watchlist = Watchlist.objects.get(user=user)
-            watchlist.items.add(item)
+            if not in_watchlist:
+                watchlist.items.add(item)
+                in_watchlist = True
+            else:
+                watchlist.items.remove(item)
+                
         if request.POST.get('placebid'):
             bid = float(request.POST['place_bid'])
             print(bid, item.bids.amount)
@@ -107,6 +115,7 @@ def item(request, item_id):
         'error': error,
         'is_seller': is_seller,
         'winner': item.winner,
+        'watchlist': in_watchlist,
     })
 
 

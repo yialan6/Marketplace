@@ -33,7 +33,12 @@
                 {% endif %}
                 <form action="{% url 'item' listing.id %}" method='post' style='margin-top:15px'>
                     {% csrf_token %}
+                    {% if watchlist %}
+                    <button type='submit' value='1' name="watchlist" class="btn btn-secondary">Remove from Watchlist</button>
+                    {% else %}
                     <button type='submit' value='1' name="watchlist" class="btn btn-secondary">Add to Watchlist</button>
+                    {% endif %}
+
                 </form>
                 <form action="{% url 'item' listing.id %}" method='post' style='margin-top:15px'>
                     {% csrf_token %}
