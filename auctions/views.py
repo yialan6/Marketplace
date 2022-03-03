@@ -106,7 +106,8 @@ def item(request, item_id):
             else:
                 error = True
         if request.POST.get('end_listing'):
-            item.winner = user
+            winner = item.bids.buyer
+            item.winner = winner
             item.save()
 
     return render(request, 'auctions/item.html', {

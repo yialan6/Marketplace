@@ -40,10 +40,12 @@
                     {% endif %}
 
                 </form>
+                {% if is_seller %}
                 <form action="{% url 'item' listing.id %}" method='post' style='margin-top:15px'>
                     {% csrf_token %}
                     <button type='submit' value='1' name="end_listing" class="btn btn-secondary">End listing</button>
                 </form>
+                {% endif %}
                 {% else %}
                 <div class="alert alert-success" role="alert">
                     Listing ended! {{ winner }} won the bidding for ${{ listing.bids.amount }}
